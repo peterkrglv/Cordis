@@ -1,14 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.playlists.SongChordsFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.chords.SongChordsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingBottom="80dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/md_theme_surfaceContainerHigh"
+                app:cardCornerRadius="12dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/song_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginVertical="16dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@color/md_theme_primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/song_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Song"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/song_artist"
+                        app:layout_constraintStart_toEndOf="@id/song_image"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/song_artist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Artist"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@id/tuning"
+                        app:layout_constraintStart_toEndOf="@id/song_image"
+                        app:layout_constraintTop_toBottomOf="@id/song_name" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tuning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Tuning"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toTopOf="@id/capo"
+                        app:layout_constraintStart_toEndOf="@id/song_image"
+                        app:layout_constraintTop_toBottomOf="@id/song_artist" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/capo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Capo:"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/tuning"
+                        app:layout_constraintStart_toEndOf="@id/song_image"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/more_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/more"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/chords"
+                android:paddingHorizontal="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:text="@string/wonderwall"
+                />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/font_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Font"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/transpose_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Transpose"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/scroll_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Scroll"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/minus" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/plus" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/minus" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/plus" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/minus" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/plus" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

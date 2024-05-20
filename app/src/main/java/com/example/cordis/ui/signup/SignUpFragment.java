@@ -1,4 +1,4 @@
-package com.example.cordis.ui.playlists;
+package com.example.cordis.ui.signup;
 
 import android.os.Bundle;
 
@@ -9,19 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cordis.R;
+import com.example.cordis.databinding.FragmentSignUpBinding;
 
-
-public class SongChordsFragment extends Fragment {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+public class SignUpFragment extends Fragment {
+    FragmentSignUpBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_song_chords, container, false);
+        binding = FragmentSignUpBinding.inflate(inflater, container, false);
+
+
+
+        return binding.getRoot();
     }
 }

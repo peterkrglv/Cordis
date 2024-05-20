@@ -3,15 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/playlistsFragment">
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.cordis.ui.playlists.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        android:id="@+id/playlistsFragment"
+        android:name="com.example.cordis.ui.playlists.PlaylistsFragment"
+        android:label="fragment_playlists"
+        tools:layout="@layout/fragment_playlists" >
+        <action
+            android:id="@+id/action_playlistsFragment_to_songsInPlaylistFragment"
+            app:destination="@id/songsInPlaylistFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_songChordsFragment"
+            app:destination="@id/songChordsFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/playlistFragment"
-        android:name="com.example.cordis.ui.songs.PlaylistFragment"
-        android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        android:id="@+id/songChordsFragment"
+        android:name="com.example.cordis.ui.chords.SongChordsFragment"
+        android:label="fragment_song_chords"
+        tools:layout="@layout/fragment_song_chords" >
+        <action
+            android:id="@+id/action_songChordsFragment_to_songsInPlaylistFragment"
+            app:destination="@id/songsInPlaylistFragment" />
+        <action
+            android:id="@+id/action_songChordsFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/songsInPlaylistFragment"
+        android:name="com.example.cordis.ui.songs.SongsInPlaylistFragment"
+        android:label="fragment_songs_in_playlist"
+        tools:layout="@layout/fragment_songs_in_playlist" >
+        <action
+            android:id="@+id/action_songsInPlaylistFragment_to_songChordsFragment"
+            app:destination="@id/songChordsFragment" />
+        <action
+            android:id="@+id/action_songsInPlaylistFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
 </navigation>

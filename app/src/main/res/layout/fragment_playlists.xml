@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.playlists.MainFragment">
+    tools:context=".ui.playlists.PlaylistsFragment">
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
     <androidx.core.widget.NestedScrollView
@@ -13,7 +13,7 @@
         app:layout_behavior="@string/searchbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_recycler_view"
+            android:id="@+id/playlists_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="86dp"
