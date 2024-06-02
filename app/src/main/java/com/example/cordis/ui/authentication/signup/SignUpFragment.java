@@ -1,4 +1,4 @@
-package com.example.cordis.ui.signup;
+package com.example.cordis.ui.authentication.signup;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cordis.Methods;
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentSignUpBinding;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SignUpFragment extends Fragment {
     FragmentSignUpBinding binding;
@@ -59,6 +61,12 @@ public class SignUpFragment extends Fragment {
                 viewModel.userSignUp(binding.inputName.getText().toString(), binding.inputEmail.getText().toString(), binding.inputPassword.getText().toString());
             }
         });
+
+        TextInputLayout passwordLayout = binding.passwordLayout;
+        Methods.setPasswordIcon(passwordLayout, binding.getRoot());
+        TextInputLayout confirmPasswordLayout = binding.confirmPasswordLayout;
+        Methods.setPasswordIcon(confirmPasswordLayout, binding.getRoot());
+
         return binding.getRoot();
     }
 }

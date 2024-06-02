@@ -1,4 +1,4 @@
-package com.example.cordis.ui.songs;
+package com.example.cordis.ui.songs_in_playlist;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -15,7 +15,6 @@ import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentSongsInPlaylistBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
 import com.example.cordis.domain.song.SongModel;
-import com.example.cordis.ui.songs.SongsAdapter;
 
 
 public class SongsInPlaylistFragment extends Fragment {
@@ -30,11 +29,11 @@ public class SongsInPlaylistFragment extends Fragment {
         if (bundle != null) {
             PlaylistModel playlist = bundle.getParcelable("playlist");
             binding.playlistName.setText(playlist.getPlaylistName());
-            binding.playlistOwner.setText(playlist.getPlaylistOwner());
+            binding.playlistOwner.setText(playlist.getPlaylistOwnerName());
             binding.playlistDescription.setText(playlist.getPlaylistDescription());
             //binding.playlistImage.setImageBitmap(playlist.getPlaylistImage());
             //add songs to recycler
-            SongsAdapter songsAdapter = new SongsAdapter(playlist.getSongs(), binding.getRoot());
+            SongsAdapter songsAdapter = new SongsAdapter(playlist.getSongs());
             binding.songsRecycler.setAdapter(songsAdapter);
             binding.songsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
             songsAdapter.setOnSongClickListener(new SongsAdapter.onSongClickListener() {

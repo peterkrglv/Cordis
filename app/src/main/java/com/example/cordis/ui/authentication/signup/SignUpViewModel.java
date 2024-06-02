@@ -1,6 +1,4 @@
-package com.example.cordis.ui.signup;
-
-import static com.google.common.collect.ComparisonChain.start;
+package com.example.cordis.ui.authentication.signup;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,8 +8,6 @@ import com.example.cordis.domain.user.CreateUserUseCase;
 import com.example.cordis.domain.user.UserModel;
 import com.example.cordis.domain.user.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpViewModel extends ViewModel {
     MutableLiveData<SignUpState> signUpStatus = new MutableLiveData<>();
@@ -22,7 +18,7 @@ public class SignUpViewModel extends ViewModel {
             if (task.isSuccessful()) {
                 new Thread(() -> {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                         UserRepository userRepository = new UserRepositoryImpl();
                         UserModel user = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), name);
                         if (CreateUserUseCase.execute(user, userRepository)) {

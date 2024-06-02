@@ -14,7 +14,6 @@ import java.util.List;
 
 public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.PlaylistsViewHolder> {
     List<PlaylistModel> playlists;
-    View view;
     private OnPlaylistClickListener onPlaylistClickListener;
 
     public interface OnPlaylistClickListener {
@@ -28,7 +27,6 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
     public PlaylistsAdapter(List<PlaylistModel> playlists, View view) {
         this.playlists = playlists;
-        this.view = view;
     }
 
     class PlaylistsViewHolder extends RecyclerView.ViewHolder {
@@ -70,6 +68,10 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
     public int getItemCount() {
 
         return playlists.size();
+    }
+
+    public void setPlaylists(List<PlaylistModel> playlists) {
+        this.playlists = playlists;
     }
 
 }

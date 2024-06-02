@@ -1,8 +1,7 @@
 package com.example.cordis.domain.song;
 
-public class CreateSongUseCase {
+public class UpdateUserUseCase {
     public static Boolean execute(SongModel song, SongRepository songRepository) {
-
-        return songRepository.createSong(song);
+        return songRepository.updateSong(song);
     }
 }

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_surfaceContainerLow"
-    tools:context=".ui.signup.SignUpFragment">
+    tools:context=".ui.authentication.signup.SignUpFragment">
 
     <TextView
         android:id="@+id/signupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textColor="@color/md_theme_onSurface"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -40,7 +40,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="48dp"
-        android:hint="Name"
+        android:hint="@string/name"
         app:layout_constraintBottom_toTopOf="@id/emailLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintBottom_toTopOf="@id/passwordLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,11 +82,11 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
-        android:hint="Password"
+        android:hint="@string/password"
         app:endIconDrawable="@drawable/guitar_pick_filled"
         app:endIconMode="custom"
         app:endIconTint="@color/md_theme_primary"
-        app:layout_constraintBottom_toTopOf="@id/passwordConfirmLayout"
+        app:layout_constraintBottom_toTopOf="@id/confirmPasswordLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailLayout">
@@ -100,14 +100,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordConfirmLayout"
+        android:id="@+id/confirmPasswordLayout"
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
-        android:hint="Confirm password"
+        android:hint="@string/confirm_password"
         app:endIconDrawable="@drawable/guitar_pick_filled"
         app:endIconMode="custom"
         app:endIconTint="@color/md_theme_primary"
@@ -129,18 +129,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         app:layout_constraintBottom_toTopOf="@id/switchToLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordConfirmLayout" />
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordLayout" />
 
     <TextView
         android:id="@+id/switchToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Proceed to"
+        android:text="@string/proceed_to"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/loginButton"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -156,7 +156,7 @@
         android:minWidth="0dp"
         android:padding="0dp"
         android:paddingStart="4dp"
-        android:text="Log In"
+        android:text="@string/log_in"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="@id/switchToLogin"
         app:layout_constraintEnd_toEndOf="parent"

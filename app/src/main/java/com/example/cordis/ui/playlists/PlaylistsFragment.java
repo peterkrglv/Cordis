@@ -2,57 +2,68 @@ package com.example.cordis.ui.playlists;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentPlaylistsBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
-import com.example.cordis.domain.song.SongModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlaylistsFragment extends Fragment {
     FragmentPlaylistsBinding binding;
+    PlaylistsViewModel viewModel;
+    PlaylistsAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPlaylistsBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(PlaylistsViewModel.class);
+        viewModel.getPlaylistsState.observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case LOADING:
+                    binding.blockingView.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    break;
+                case SUCCESS:
+                    binding.blockingView.setVisibility(View.GONE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    break;
+                case ERROR:
+                    binding.blockingView.setVisibility(View.GONE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    break;
+            }
+        });
 
+        viewModel.createdPlaylists.observe(getViewLifecycleOwner(), obtainedPlaylists -> {
+            Log.d("PlaylistsFragment", "Obtained playlists: " + obtainedPlaylists.size());
+            adapter.setPlaylists(obtainedPlaylists);
+            adapter.notifyDataSetChanged();
+        });
 
-        //random list with a few playlist models
-        List<PlaylistModel> playlists = new ArrayList<>();
-        playlists.add(new PlaylistModel("Playlist 1", "Owner 1", "Description 1", null));
-        playlists.add(new PlaylistModel("Playlist 2", "Owner 2", "Description 2", null));
-        playlists.add(new PlaylistModel("Playlist 3", "Owner 3", "Description 3", null));
-        playlists.add(new PlaylistModel("Playlist 4", "Owner 4", "Description 4", null));
+        viewModel.getPlaylists();
 
-        //random songs(songModel: private String songName;
-        //    private String songArtist;
-        //    private String tuning;
-        //    private String capo;
-        //    private String chords;
-        //    private Bitmap songImage;
-        //    private String owner;) in the playlist1
-        List<SongModel> songs = new ArrayList<>();
-        songs.add(new SongModel("Song 1", "Artist 1", "Tuning 1", "Capo 1", "Chords 1", null, "Owner 1"));
-        songs.add(new SongModel("Song 2", "Artist 2", "Tuning 2", "Capo 2", "Chords 2", null, "Owner 2"));
-        songs.add(new SongModel("Song 3", "Artist 3", "Tuning 3", "Capo 3", "Chords 3", null, "Owner 3"));
-        songs.add(new SongModel("Song 4", "Artist 4", "Tuning 4", "Capo 4", "Chords 4", null, "Owner 4"));
-        playlists.get(0).setSongs(songs);
-        PlaylistsAdapter playlistsAdapter = new PlaylistsAdapter(playlists, binding.getRoot());
-        playlistsAdapter.setOnPlaylistClickListener(new PlaylistsAdapter.OnPlaylistClickListener() {
+        adapter = new PlaylistsAdapter(new ArrayList<>(), binding.getRoot());
+        binding.playlistsRecyclerView.setAdapter(adapter);
+        binding.playlistsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter.setOnPlaylistClickListener(new PlaylistsAdapter.OnPlaylistClickListener() {
             @Override
             public void onPlaylistClick(PlaylistModel playlist) {
                 Bundle bundle = new Bundle();
@@ -61,11 +72,55 @@ public class PlaylistsFragment extends Fragment {
             }
         });
 
-        binding.playlistsRecyclerView.setAdapter(playlistsAdapter);
-        binding.playlistsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.createdSongsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_createdSongsFragment);
+            }
+        });
 
+        binding.favouritesCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                findNavController(binding.getRoot()).navigate(R.id.action_playlistsFragment_to_favouritesFragment);
+            }
+        });
+
+        setUpAddButton();
 
         return binding.getRoot();
     }
+
+    private void setUpAddButton() {
+        binding.addPlaylist.setVisibility(View.INVISIBLE);
+        binding.addSong.setVisibility(View.INVISIBLE);
+        binding.addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.addPlaylist.getVisibility() == View.INVISIBLE) {
+                    binding.addPlaylist.setVisibility(View.VISIBLE);
+                    binding.addSong.setVisibility(View.VISIBLE);
+                } else {
+                    binding.addPlaylist.setVisibility(View.INVISIBLE);
+                    binding.addSong.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        binding.addSong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_editSongFragment);
+            }
+        });
+
+        binding.addPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_createPlaylistFragment);
+            }
+        });
+    }
 }
+

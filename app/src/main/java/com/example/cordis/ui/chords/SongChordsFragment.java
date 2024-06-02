@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class SongChordsFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             SongModel song = bundle.getParcelable("song");
+            Log.d("SongChordsFragment", "onCreateView: " + song.getSongName());
             binding.songName.setText(song.getSongName());
             binding.songArtist.setText(song.getSongArtist());
             binding.tuning.setText(song.getTuning());

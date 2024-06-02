@@ -7,15 +7,22 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class SongModel implements Parcelable {
-    private String songName;
-    private String songArtist;
-    private String tuning;
-    private String capo;
-    private String chords;
-    private Bitmap songImage;
-    private String owner;
 
-    public SongModel(String songName, String songArtist, String tuning, String capo, String chords, Bitmap songImage, String owner) {
+    private String songId = "";
+    private String songName = "";
+    private String songArtist = "";
+    private String tuning = "";
+    private String capo = "";
+    private String chords = "";
+    private Bitmap songImage;
+    private String owner = "";
+
+    public SongModel() {
+
+    }
+
+    public SongModel(String songId, String songName, String songArtist, String tuning, String capo, String chords, Bitmap songImage, String owner) {
+        this.songId = songId;
         this.songName = songName;
         this.songArtist = songArtist;
         this.tuning = tuning;
@@ -102,12 +109,19 @@ public class SongModel implements Parcelable {
         this.owner = owner;
     }
 
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public void setSongId(String songId) {
+        this.songId = songId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
-
-
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {

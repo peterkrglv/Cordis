@@ -11,17 +11,30 @@ import com.example.cordis.domain.song.SongModel;
 import java.util.List;
 
 public class PlaylistModel implements Parcelable {
-    //Based on the playlist_item.xml
+    private String playlistId;
     private String playlistName;
     private String playlistOwner;
+    private String playlistOwnerName;
     private String playlistDescription;
     private Bitmap playlistImage;
     private List<SongModel> songs;
 
-    public PlaylistModel(String playlistName, String playlistOwner,
-                         String playlistDescription, Bitmap playlistImage) {
+    public PlaylistModel() {
+        playlistId = "";
+        playlistName = "";
+        playlistOwner = "";
+        playlistOwnerName = "";
+        playlistDescription = "";
+        playlistImage = null;
+    }
+
+    public PlaylistModel(
+            String playlistId, String playlistName, String playlistOwner,
+            String playlistOwnerName, String playlistDescription, Bitmap playlistImage) {
+        this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.playlistOwner = playlistOwner;
+        this.playlistOwnerName = playlistOwnerName;
         this.playlistDescription = playlistDescription;
         this.playlistImage = playlistImage;
     }
@@ -39,8 +52,10 @@ public class PlaylistModel implements Parcelable {
     };
 
     protected PlaylistModel(Parcel in) {
+        playlistId = in.readString();
         playlistName = in.readString();
         playlistOwner = in.readString();
+        playlistOwnerName = in.readString();
         playlistDescription = in.readString();
         playlistImage = in.readParcelable(Bitmap.class.getClassLoader());
         songs = in.createTypedArrayList(SongModel.CREATOR);
@@ -86,6 +101,26 @@ public class PlaylistModel implements Parcelable {
     public void setSongs(List<SongModel> songs) {
         this.songs = songs;
     }
+
+    public void setPlaylistId(String playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    public String getPlaylistId() {
+        return playlistId;
+    }
+
+    public void setOwner(String owner) {
+        this.playlistOwner = owner;
+    }
+
+    public String getOwner() {
+        return playlistOwner;
+    }
+
+    public String getPlaylistOwnerName() {return playlistOwnerName;}
+
+    public void setPlaylistOwnerName(String playlistOwnerName) {this.playlistOwnerName = playlistOwnerName;}
 
     @Override
     public int describeContents() {

@@ -1,4 +1,4 @@
-package com.example.cordis.ui.login;
+package com.example.cordis.ui.authentication.login;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

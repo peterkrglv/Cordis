@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/startFragment">
     <fragment
         android:id="@+id/playlistsFragment"
         android:name="com.example.cordis.ui.playlists.PlaylistsFragment"
@@ -15,6 +15,18 @@
         <action
             android:id="@+id/action_playlistsFragment_to_songChordsFragment"
             app:destination="@id/songChordsFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_editSongFragment"
+            app:destination="@id/editSongFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_createdSongsFragment"
+            app:destination="@id/createdSongsFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_createPlaylistFragment"
+            app:destination="@id/createPlaylistFragment" />
     </fragment>
     <fragment
         android:id="@+id/songChordsFragment"
@@ -30,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/songsInPlaylistFragment"
-        android:name="com.example.cordis.ui.songs.SongsInPlaylistFragment"
+        android:name="com.example.cordis.ui.songs_in_playlist.SongsInPlaylistFragment"
         android:label="fragment_songs_in_playlist"
         tools:layout="@layout/fragment_songs_in_playlist" >
         <action
@@ -42,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.example.cordis.ui.login.LogInFragment"
+        android:name="com.example.cordis.ui.authentication.login.LogInFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -54,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.cordis.ui.signup.SignUpFragment"
+        android:name="com.example.cordis.ui.authentication.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -62,6 +74,63 @@
             app:destination="@id/logInFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editSongFragment"
+        android:name="com.example.cordis.ui.create.CreateSongFragment"
+        android:label="fragment_edit_song"
+        tools:layout="@layout/fragment_create_song" >
+        <action
+            android:id="@+id/action_editSongFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createdSongsFragment"
+        android:name="com.example.cordis.ui.songs_in_playlist.CreatedSongsFragment"
+        android:label="fragment_created_songs"
+        tools:layout="@layout/fragment_created_songs" >
+        <action
+            android:id="@+id/action_createdSongsFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+        <action
+            android:id="@+id/action_createdSongsFragment_to_songChordsFragment"
+            app:destination="@id/songChordsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.cordis.ui.favourites.favouritesFragment"
+        android:label="fragment_favourites"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.cordis.ui.authentication.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPlaylistFragment"
+        android:name="com.example.cordis.ui.create.CreatePlaylistFragment"
+        android:label="fragment_create_playlist"
+        tools:layout="@layout/fragment_create_playlist" >
+        <action
+            android:id="@+id/action_createPlaylistFragment_self"
+            app:destination="@id/createPlaylistFragment" />
+        <action
+            android:id="@+id/action_createPlaylistFragment_self2"
+            app:destination="@id/createPlaylistFragment" />
+        <action
+            android:id="@+id/action_createPlaylistFragment_to_playlistsFragment"
             app:destination="@id/playlistsFragment" />
     </fragment>
 </navigation>

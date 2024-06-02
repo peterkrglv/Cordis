@@ -48,7 +48,7 @@
                         android:layout_height="24dp"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="16dp"
-                        android:text="Song"
+                        android:text="@string/song"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/song_artist"
                         app:layout_constraintStart_toEndOf="@id/song_image"
@@ -60,7 +60,7 @@
                         android:layout_height="24dp"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
-                        android:text="Artist"
+                        android:text="@string/artist"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@id/tuning"
                         app:layout_constraintStart_toEndOf="@id/song_image"
@@ -72,7 +72,7 @@
                         android:layout_height="20dp"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
-                        android:text="Tuning"
+                        android:text="@string/tuning"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@id/capo"
                         app:layout_constraintStart_toEndOf="@id/song_image"
@@ -85,7 +85,7 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
-                        android:text="Capo:"
+                        android:text="@string/capo"
                         android:textSize="14sp"
                         app:layout_constraintTop_toBottomOf="@id/tuning"
                         app:layout_constraintStart_toEndOf="@id/song_image"
@@ -140,7 +140,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Font"
+                    android:text="@string/font"
                     android:gravity="center" />
 
                 <TextView
@@ -148,7 +148,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Transpose"
+                    android:text="@string/transpose"
                     android:gravity="center" />
 
                 <TextView
@@ -156,7 +156,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Scroll"
+                    android:text="@string/scroll"
                     android:gravity="center" />
             </LinearLayout>
 

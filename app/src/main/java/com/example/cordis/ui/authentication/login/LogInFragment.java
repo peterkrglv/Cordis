@@ -1,4 +1,4 @@
-package com.example.cordis.ui.login;
+package com.example.cordis.ui.authentication.login;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cordis.Methods;
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentLoginBinding;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LogInFragment extends Fragment {
 
@@ -53,6 +55,8 @@ public class LogInFragment extends Fragment {
             }
         });
 
+        TextInputLayout passwordLayout = binding.passwordLayout;
+        Methods.setPasswordIcon(passwordLayout, binding.inputPassword);
 
         return binding.getRoot();
     }

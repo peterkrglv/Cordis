@@ -1,4 +1,4 @@
-package com.example.cordis.ui.songs;
+package com.example.cordis.ui.songs_in_playlist;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,6 @@ import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHolder> {
     List<SongModel> songs;
-    View view;
     private onSongClickListener onSongClickListener;
 
     public interface onSongClickListener {
@@ -22,13 +21,16 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
 
     }
 
+    public void setSongs(List<SongModel> songs) {
+        this.songs = songs;
+    }
+
     public void setOnSongClickListener(SongsAdapter.onSongClickListener onSongClickListener) {
         this.onSongClickListener = onSongClickListener;
     }
 
-    public SongsAdapter(List<SongModel> songs, View view) {
+    public SongsAdapter(List<SongModel> songs) {
         this.songs = songs;
-        this.view = view;
     }
 
     class SongsViewHolder extends RecyclerView.ViewHolder {
@@ -43,10 +45,12 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
     @Override
     public SongsAdapter.SongsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new SongsAdapter.SongsViewHolder(
-                ItemSongBinding.inflate(LayoutInflater.from(parent.getContext()),
+                ItemSongBinding.inflate(
+                        LayoutInflater.from(parent.getContext()),
                         parent,
                         false
-                ));
+                )
+        );
     }
 
     @Override
@@ -54,6 +58,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         ItemSongBinding binding = ItemSongBinding.bind(holder.itemView);
         SongModel song = songs.get(position);
         binding.songName.setText(song.getSongName());
+        binding.songArtist.setText(song.getSongArtist());
         //binding.songImage.setImageBitmap(song.getSongImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
