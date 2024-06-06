@@ -1,5 +1,7 @@
 package com.example.cordis.domain.playlist;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelWriter.writeByteArray;
+
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,13 +13,13 @@ import com.example.cordis.domain.song.SongModel;
 import java.util.List;
 
 public class PlaylistModel implements Parcelable {
-    private String playlistId;
-    private String playlistName;
-    private String playlistOwner;
-    private String playlistOwnerName;
-    private String playlistDescription;
-    private Bitmap playlistImage;
-    private List<SongModel> songs;
+    private String playlistId = "";
+    private String playlistName = "";
+    private String playlistOwner = "";
+    private String playlistOwnerName = "";
+    private String playlistDescription = "";
+    private byte[] playlistImage = new byte[0];
+    private List<SongModel> songs = null;
 
     public PlaylistModel() {
         playlistId = "";
@@ -25,12 +27,21 @@ public class PlaylistModel implements Parcelable {
         playlistOwner = "";
         playlistOwnerName = "";
         playlistDescription = "";
-        playlistImage = null;
+        playlistImage = new byte[0];
+    }
+
+    public PlaylistModel(PlaylistItem playlistItem) {
+        this.playlistId = playlistItem.getPlaylistId();
+        this.playlistName = playlistItem.getPlaylistName();
+        this.playlistOwner = playlistItem.getPlaylistOwner();
+        this.playlistOwnerName = playlistItem.getPlaylistOwnerName();
+        this.playlistDescription = playlistItem.getPlaylistDescription();
+        this.songs = playlistItem.getSongs();
     }
 
     public PlaylistModel(
             String playlistId, String playlistName, String playlistOwner,
-            String playlistOwnerName, String playlistDescription, Bitmap playlistImage) {
+            String playlistOwnerName, String playlistDescription, byte[] playlistImage) {
         this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.playlistOwner = playlistOwner;
@@ -57,7 +68,7 @@ public class PlaylistModel implements Parcelable {
         playlistOwner = in.readString();
         playlistOwnerName = in.readString();
         playlistDescription = in.readString();
-        playlistImage = in.readParcelable(Bitmap.class.getClassLoader());
+        playlistImage = in.createByteArray();
         songs = in.createTypedArrayList(SongModel.CREATOR);
     }
 
@@ -86,11 +97,11 @@ public class PlaylistModel implements Parcelable {
         this.playlistDescription = playlistDescription;
     }
 
-    public Bitmap getPlaylistImage() {
+    public byte[] getPlaylistImage() {
         return playlistImage;
     }
 
-    public void setPlaylistImage(Bitmap playlistImage) {
+    public void setPlaylistImage(byte[] playlistImage) {
         this.playlistImage = playlistImage;
     }
 
@@ -132,7 +143,7 @@ public class PlaylistModel implements Parcelable {
         dest.writeString(this.playlistName);
         dest.writeString(this.playlistOwner);
         dest.writeString(this.playlistDescription);
-        dest.writeParcelable(this.playlistImage, flags);
+        dest.writeByteArray(this.playlistImage);
         dest.writeTypedList(this.songs);
     }
 }

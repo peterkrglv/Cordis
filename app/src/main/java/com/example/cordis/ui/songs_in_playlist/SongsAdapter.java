@@ -1,5 +1,7 @@
 package com.example.cordis.ui.songs_in_playlist;
 
+import static com.example.cordis.Methods.byteArrayToBitmap;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +61,9 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         SongModel song = songs.get(position);
         binding.songName.setText(song.getSongName());
         binding.songArtist.setText(song.getSongArtist());
-        //binding.songImage.setImageBitmap(song.getSongImage());
+        if (song.getSongImage() != null) {
+            binding.songImage.setImageBitmap(byteArrayToBitmap(song.getSongImage()));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

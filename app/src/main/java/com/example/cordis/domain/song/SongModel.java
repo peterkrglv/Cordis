@@ -1,6 +1,5 @@
 package com.example.cordis.domain.song;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,14 +13,24 @@ public class SongModel implements Parcelable {
     private String tuning = "";
     private String capo = "";
     private String chords = "";
-    private Bitmap songImage;
+    private byte[] songImage = new byte[0];
     private String owner = "";
 
     public SongModel() {
-
     }
 
-    public SongModel(String songId, String songName, String songArtist, String tuning, String capo, String chords, Bitmap songImage, String owner) {
+    public SongModel(SongItem songItem) {
+        this.songId = songItem.getSongId();
+        this.songName = songItem.getSongName();
+        this.songArtist = songItem.getSongArtist();
+        this.tuning = songItem.getTuning();
+        this.capo = songItem.getCapo();
+        this.chords = songItem.getChords();
+        this.owner = songItem.getOwner();
+    }
+
+    public SongModel(String songId, String songName, String songArtist, String tuning, String capo,
+                     String chords, byte[] songImage, String owner) {
         this.songId = songId;
         this.songName = songName;
         this.songArtist = songArtist;
@@ -38,7 +47,7 @@ public class SongModel implements Parcelable {
         tuning = in.readString();
         capo = in.readString();
         chords = in.readString();
-        songImage = in.readParcelable(Bitmap.class.getClassLoader());
+        songImage = in.createByteArray();
     }
 
     public static final Creator<SongModel> CREATOR = new Creator<SongModel>() {
@@ -93,11 +102,11 @@ public class SongModel implements Parcelable {
         this.chords = chords;
     }
 
-    public Bitmap getSongImage() {
+    public byte[] getSongImage() {
         return songImage;
     }
 
-    public void setSongImage(Bitmap songImage) {
+    public void setSongImage(byte[] songImage) {
         this.songImage = songImage;
     }
 
@@ -130,7 +139,7 @@ public class SongModel implements Parcelable {
         dest.writeString(this.tuning);
         dest.writeString(this.capo);
         dest.writeString(this.chords);
-        dest.writeParcelable(this.songImage, flags);
+        dest.writeByteArray(this.songImage);
         dest.writeString(this.owner);
     }
 

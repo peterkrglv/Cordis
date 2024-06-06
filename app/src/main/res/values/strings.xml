@@ -36,4 +36,7 @@
     <string name="create_playlist">Create a new playlist</string>
     <string name="change_image">Change image</string>
     <string name="create">Create\n</string>
+    <string name="create_song">Create a new song</string>
+    <string name="create_chords">Create new chords</string>
+    <string name="stop">Stop</string>
 </resources>

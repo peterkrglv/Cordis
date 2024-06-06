@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cordis.Methods;
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentSongsInPlaylistBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
@@ -31,8 +32,9 @@ public class SongsInPlaylistFragment extends Fragment {
             binding.playlistName.setText(playlist.getPlaylistName());
             binding.playlistOwner.setText(playlist.getPlaylistOwnerName());
             binding.playlistDescription.setText(playlist.getPlaylistDescription());
-            //binding.playlistImage.setImageBitmap(playlist.getPlaylistImage());
-            //add songs to recycler
+            if (playlist.getPlaylistImage() != null) {
+                binding.playlistImage.setImageBitmap(Methods.byteArrayToBitmap(playlist.getPlaylistImage()));
+            }
             SongsAdapter songsAdapter = new SongsAdapter(playlist.getSongs());
             binding.songsRecycler.setAdapter(songsAdapter);
             binding.songsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

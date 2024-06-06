@@ -32,4 +32,10 @@
     <string name="scroll">Прокрутка</string>
     <string name="playlist_descr">Описание плейлиста</string>
     <string name="playlist_name">Название плейлиста</string>
+    <string name="create_playlist">Создайте новый плейлист</string>
+    <string name="change_image">Изменить картинку</string>
+    <string name="create">Создать</string>
+    <string name="create_song">Создайте новую песню</string>
+    <string name="create_chords">Создайте новые аккорды</string>
+    <string name="stop">Стоп</string>
 </resources>

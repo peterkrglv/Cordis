@@ -1,17 +1,24 @@
 package com.example.cordis;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.TransportInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class Methods {
     public static void setPasswordIcon(TextInputLayout layout, View view) {
@@ -51,6 +58,36 @@ public class Methods {
                 return false;
             }
             return networkInfo.isConnected();
+        }
+    }
+
+    public static byte[] bitmapToByteArray(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap byteArrayToBitmap(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;
+        }
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+    }
+
+    public static Bitmap makeImageSquare(Context context, Uri img) {
+        try {
+            Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), img);
+            int size = Math.min(originalBitmap.getWidth(), originalBitmap.getHeight());
+            int x = (originalBitmap.getWidth() - size) / 2;
+            int y = (originalBitmap.getHeight() - size) / 2;
+            return Bitmap.createBitmap(originalBitmap, x, y, size, size);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

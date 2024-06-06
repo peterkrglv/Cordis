@@ -1,13 +1,7 @@
 package com.example.cordis.data;
 
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.cordis.domain.song.SongModel;
+import com.example.cordis.domain.song.SongItem;
 import com.example.cordis.domain.song.SongRepository;
-import com.example.cordis.domain.user.UserModel;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -19,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SongRepositoryImpl implements SongRepository {
     @Override
-    public Boolean createSong(SongModel song) {
+    public Boolean createSong(SongItem song) {
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("songs").document(song.getSongId()).set(song);
@@ -32,7 +26,7 @@ public class SongRepositoryImpl implements SongRepository {
     }
 
     @Override
-    public Boolean updateSong(SongModel song) {
+    public Boolean updateSong(SongItem song) {
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("songs").document(song.getSongId()).set(song);
@@ -43,7 +37,7 @@ public class SongRepositoryImpl implements SongRepository {
     }
 
     @Override
-    public SongModel getSong(String songId) {
+    public SongItem getSong(String songId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentSnapshot doc = null;
         try {
@@ -51,7 +45,7 @@ public class SongRepositoryImpl implements SongRepository {
         } catch (ExecutionException | InterruptedException e) {
         }
         if (doc != null && doc.exists()) {
-            return doc.toObject(SongModel.class);
+            return doc.toObject(SongItem.class);
         } else {
             return null;
         }
@@ -66,5 +60,19 @@ public class SongRepositoryImpl implements SongRepository {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public List<SongItem> getAllSongs() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<SongItem> songs = new ArrayList<>();
+        try {
+            List<DocumentSnapshot> docs = Tasks.await(db.collection("songs").get()).getDocuments();
+            for (DocumentSnapshot doc : docs) {
+                songs.add(doc.toObject(SongItem.class));
+            }
+        } catch (ExecutionException | InterruptedException e) {
+        }
+        return songs;
     }
 }

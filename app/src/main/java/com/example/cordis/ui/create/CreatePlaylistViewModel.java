@@ -1,27 +1,32 @@
 package com.example.cordis.ui.create;
 
+
+import static com.example.cordis.Methods.makeImageSquare;
+
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.cordis.Methods;
+import com.example.cordis.data.ImageRepositoryImpl;
 import com.example.cordis.data.PlaylistRepositoryImpl;
 import com.example.cordis.data.UserRepositoryImpl;
+import com.example.cordis.domain.ImageRepository;
 import com.example.cordis.domain.playlist.CreatePlaylistUseCase;
 import com.example.cordis.domain.playlist.PlaylistModel;
 import com.example.cordis.domain.playlist.PlaylistRepository;
-import com.example.cordis.domain.user.GetUserUseCase;
-import com.example.cordis.domain.user.UserModel;
 import com.example.cordis.domain.user.UserRepository;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.checker.index.qual.EnsuresLTLengthOf;
+import java.io.IOException;
 
 public class CreatePlaylistViewModel extends ViewModel {
     MutableLiveData<CreatePlaylistState> createPlaylistState = new MutableLiveData<>();
-
+    MutableLiveData<Bitmap> playlistImage = new MutableLiveData<>();
     public void createPlaylist(String playlistName, String playlistDescription) {
         createPlaylistState.postValue(CreatePlaylistState.LOADING);
         new Thread(() -> {
@@ -29,24 +34,14 @@ public class CreatePlaylistViewModel extends ViewModel {
                 Thread.sleep(1000);
                 PlaylistRepository playlistRepository = new PlaylistRepositoryImpl();
                 UserRepository userRepository = new UserRepositoryImpl();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                String playlistId = db.collection("playlists").document().getId();
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String username = "";       //возможно это костыль
-                if (GetUserUseCase.execute(uid, userRepository) != null) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    UserModel user = userRepository.getUser(uid);
-                    username = user.getName();
-                } else {
-                    createPlaylistState.postValue(CreatePlaylistState.ERROR);
-                }
-                PlaylistModel playlist = new PlaylistModel(playlistId, playlistName, uid, username,
-                        playlistDescription, null);
-                if (CreatePlaylistUseCase.execute(playlist, playlistRepository)) {
+                ImageRepository imageRepository = new ImageRepositoryImpl();
+                PlaylistModel playlist = new PlaylistModel(null,
+                        playlistName,
+                        null,
+                        null,
+                        playlistDescription,
+                        Methods.bitmapToByteArray(playlistImage.getValue()));
+                if (CreatePlaylistUseCase.execute(playlist, playlistRepository, userRepository, imageRepository)) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -54,8 +49,21 @@ public class CreatePlaylistViewModel extends ViewModel {
                     }
                     createPlaylistState.postValue(CreatePlaylistState.SUCCESS);
                 } else {
+                    Log.e("CreatePlaylistViewModel", "createPlaylist: error");
                     createPlaylistState.postValue(CreatePlaylistState.ERROR);
                 }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public void setPlaylistImage(Context context, Uri image) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                Bitmap squareImage = makeImageSquare(context, image);
+                playlistImage.postValue(squareImage);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

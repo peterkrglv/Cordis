@@ -5,8 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.cordis.data.ImageRepositoryImpl;
 import com.example.cordis.data.SongRepositoryImpl;
 import com.example.cordis.data.UserRepositoryImpl;
+import com.example.cordis.domain.ImageRepository;
 import com.example.cordis.domain.song.GetCreatedSongsUseCase;
 import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.domain.song.SongRepository;
@@ -29,8 +31,11 @@ public class CreatedSongsViewModel extends ViewModel {
             new Thread(() -> {
                 UserRepository userRepository = new UserRepositoryImpl();
                 SongRepository songRepository = new SongRepositoryImpl();
-                String uid = FirebaseAuth.getInstance().getUid();
-                List<SongModel> songs = GetCreatedSongsUseCase.execute(uid, userRepository, songRepository);
+                ImageRepository imageRepository = new ImageRepositoryImpl();
+                List<SongModel> songs = GetCreatedSongsUseCase.execute(
+                        userRepository,
+                        songRepository,
+                        imageRepository);
                 createdSongs.postValue(songs);
                 createdSongsState.postValue(GetCreatedSongsState.SUCCESS);
             }).start();

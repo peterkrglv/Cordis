@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cordis.Methods;
 import com.example.cordis.databinding.ItemPlaylistBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
 
@@ -52,8 +53,9 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
         PlaylistModel playlist = playlists.get(position);
         holder.binding.playlistName.setText(playlist.getPlaylistName());
         holder.binding.playlistDescription.setText(playlist.getPlaylistDescription());
-        //binding.playlistImage.setImageBitmap(playlist.getPlaylistImage());
-
+        if (playlist.getPlaylistImage() != null) {
+            holder.binding.playlistImage.setImageBitmap(Methods.byteArrayToBitmap(playlist.getPlaylistImage()));
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

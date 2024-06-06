@@ -1,8 +1,8 @@
 package com.example.cordis.domain.playlist;
 
 public interface PlaylistRepository {
-    Boolean createPlaylist(PlaylistModel playlist);
-    Boolean updatePlaylist(PlaylistModel playlist);
-    PlaylistModel getPlaylist(String playlistId);
+    Boolean createPlaylist(PlaylistItem playlist);
+    Boolean updatePlaylist(PlaylistItem playlist);
+    PlaylistItem getPlaylist(String playlistId);
     Boolean deletePlaylist(String playlistId);
 }

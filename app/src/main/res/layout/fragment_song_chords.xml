@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.chords.SongChordsFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="80dp"
@@ -35,8 +36,8 @@
                         android:id="@+id/song_image"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:layout_marginVertical="16dp"
                         android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="16dp"
                         android:background="@color/md_theme_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -87,9 +88,9 @@
                         android:layout_marginBottom="16dp"
                         android:text="@string/capo"
                         android:textSize="14sp"
-                        app:layout_constraintTop_toBottomOf="@id/tuning"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/song_image"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/tuning" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/more_icon"
@@ -107,12 +108,11 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/chords"
-                android:paddingHorizontal="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
                 android:scrollbars="vertical"
-                android:text="@string/wonderwall"
-                />
+                android:text="@string/wonderwall" />
 
         </LinearLayout>
 
@@ -127,87 +127,126 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/font_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/font"
-                    android:gravity="center" />
+                    app:layout_constraintBottom_toTopOf="@+id/font_minus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/font_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/minus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/font_plus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/font_text" />
+
+                <Button
+                    android:id="@+id/font_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/plus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/font_minus"
+                    app:layout_constraintTop_toBottomOf="@+id/font_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/transpose_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/transpose"
-                    android:gravity="center" />
+                    app:layout_constraintBottom_toTopOf="@+id/transpose_minus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/transpose_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/minus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/transpose_plus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/transpose_text" />
+
+                <Button
+                    android:id="@+id/transpose_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/plus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/transpose_minus"
+                    app:layout_constraintTop_toBottomOf="@+id/transpose_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/scroll_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/scroll"
-                    android:gravity="center" />
-            </LinearLayout>
+                    app:layout_constraintBottom_toTopOf="@+id/scroll_minus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image1"
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/scroll_minus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/minus" />
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/minus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/scroll_plus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scroll_text" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image2"
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/scroll_plus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/plus" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/minus" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/plus" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/minus" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/plus" />
-            </LinearLayout>
-
+                    style="@style/Widget.Material3.Button.IconButton"
+                    app:icon="@drawable/plus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/scroll_minus"
+                    app:layout_constraintTop_toBottomOf="@+id/scroll_text" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
