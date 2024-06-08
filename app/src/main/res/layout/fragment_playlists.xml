@@ -14,7 +14,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/favourites_card"
@@ -143,19 +144,20 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="16dp">
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_searchview">
 
         <SearchView
             android:id="@+id/search_view"
             style="@style/TextAppearance.Material3.SearchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_searchview"
             android:hint="@string/searchbar_hint"
-            app:layout_anchor="@id/search_bar"></SearchView>
+            app:layout_anchor="@id/search_bar" />
     </com.google.android.material.appbar.AppBarLayout>
 
 

@@ -7,7 +7,7 @@ public class UserModel {
     private String uid;
     private String name;
     private List<String> playlists;
-    private List<String> favourites;
+    private List<String> favouriteSongs;
     private List<String> createdSongs;
     private List<String> createdPlaylists;
 
@@ -15,7 +15,7 @@ public class UserModel {
         uid = "";
         name = "";
         playlists = new ArrayList<>();
-        favourites = new ArrayList<>();
+        favouriteSongs = new ArrayList<>();
         createdSongs = new ArrayList<>();
         createdPlaylists = new ArrayList<>();
     }
@@ -24,7 +24,7 @@ public class UserModel {
         this.uid = uid;
         this.name = name;
         playlists = new ArrayList<>();
-        favourites = new ArrayList<>();
+        favouriteSongs = new ArrayList<>();
         createdSongs = new ArrayList<>();
         createdPlaylists = new ArrayList<>();
     }
@@ -41,8 +41,8 @@ public class UserModel {
         return playlists;
     }
 
-    public List<String> getFavourites() {
-        return favourites;
+    public List<String> getFavouriteSongs() {
+        return favouriteSongs;
     }
 
     public List<String> getCreatedSongs() {
@@ -65,8 +65,8 @@ public class UserModel {
         this.playlists = playlists;
     }
 
-    public void setFavourites(List<String> favourites) {
-        this.favourites = favourites;
+    public void setFavouriteSongs(List<String> favouriteSongs) {
+        this.favouriteSongs = favouriteSongs;
     }
 
     public void setCreatedSongs(List<String> createdSongs) {

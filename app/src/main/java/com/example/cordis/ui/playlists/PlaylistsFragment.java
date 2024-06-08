@@ -17,7 +17,8 @@ import android.widget.SearchView;
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentPlaylistsBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
-import com.example.cordis.ui.songs_in_playlist.SongsAdapter;
+import com.example.cordis.ui.adapters.PlaylistsAdapter;
+import com.example.cordis.ui.adapters.SongsAdapter;
 
 import java.util.ArrayList;
 
@@ -44,10 +45,12 @@ public class PlaylistsFragment extends Fragment {
                 case LOADING:
                     binding.blockingView.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.VISIBLE);
+                    binding.addButton.setVisibility(View.GONE);
                     break;
                 case SUCCESS:
                     binding.blockingView.setVisibility(View.GONE);
                     binding.progressBar.setVisibility(View.GONE);
+                    binding.addButton.setVisibility(View.VISIBLE);
                     break;
                 case ERROR:
                     binding.blockingView.setVisibility(View.GONE);
@@ -55,6 +58,8 @@ public class PlaylistsFragment extends Fragment {
                     break;
             }
         });
+
+        binding.blockingView.setOnClickListener(v -> {});
 
         viewModel.createdPlaylists.observe(getViewLifecycleOwner(), obtainedPlaylists -> {
             Log.d("PlaylistsFragment", "Obtained playlists: " + obtainedPlaylists.size());
@@ -72,10 +77,9 @@ public class PlaylistsFragment extends Fragment {
         viewModel.getAllSongs();
 
         setUpPlaylistsAdapter();
-        setUpSearchAdapter();
         setUpCards();
         setUpAddButton();
-        setUpSearchView();
+        setUpSearch();
 
         return binding.getRoot();
     }
@@ -84,7 +88,7 @@ public class PlaylistsFragment extends Fragment {
         binding.favouritesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(binding.getRoot()).navigate(R.id.action_playlistsFragment_to_favouritesFragment);
+                findNavController(binding.getRoot()).navigate(R.id.action_playlistsFragment_to_favouriteSongsFragment);
             }
         });
 
@@ -94,12 +98,6 @@ public class PlaylistsFragment extends Fragment {
                 findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_createdSongsFragment);
             }
         });
-    }
-
-    private void setUpSearchAdapter() {
-        searchAdapter = new SongsAdapter(new ArrayList<>());
-        binding.searchRecyclerView.setAdapter(searchAdapter);
-        binding.searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void setUpPlaylistsAdapter() {
@@ -116,9 +114,12 @@ public class PlaylistsFragment extends Fragment {
         });
     }
 
-    private void setUpSearchView() {
-        SearchView searchView = binding.searchView;
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
+    private void setUpSearch() {
+        searchAdapter = new SongsAdapter(new ArrayList<>());
+        binding.searchRecyclerView.setAdapter(searchAdapter);
+        binding.searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.searchBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 binding.playlistsRecyclerView.setVisibility(View.GONE);
@@ -126,10 +127,12 @@ public class PlaylistsFragment extends Fragment {
                 binding.favouritesCard.setVisibility(View.GONE);
                 binding.createdSongsCard.setVisibility(View.GONE);
                 binding.addButton.setVisibility(View.GONE);
+                binding.addPlaylist.setVisibility(View.GONE);
+                binding.addSong.setVisibility(View.GONE);
             }
         });
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        binding.searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 binding.searchRecyclerView.setVisibility(View.GONE);
@@ -143,17 +146,17 @@ public class PlaylistsFragment extends Fragment {
     }
 
     private void setUpAddButton() {
-        binding.addPlaylist.setVisibility(View.INVISIBLE);
-        binding.addSong.setVisibility(View.INVISIBLE);
+        binding.addPlaylist.setVisibility(View.GONE);
+        binding.addSong.setVisibility(View.GONE);
         binding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (binding.addPlaylist.getVisibility() == View.INVISIBLE) {
+                if (binding.addPlaylist.getVisibility() == View.GONE) {
                     binding.addPlaylist.setVisibility(View.VISIBLE);
                     binding.addSong.setVisibility(View.VISIBLE);
                 } else {
-                    binding.addPlaylist.setVisibility(View.INVISIBLE);
-                    binding.addSong.setVisibility(View.INVISIBLE);
+                    binding.addPlaylist.setVisibility(View.GONE);
+                    binding.addSong.setVisibility(View.GONE);
                 }
             }
         });

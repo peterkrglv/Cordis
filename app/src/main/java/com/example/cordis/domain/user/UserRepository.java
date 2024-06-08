@@ -7,4 +7,5 @@ public interface UserRepository {
     Boolean updateUser(UserModel user);
     UserModel getUser(String uid);
     Boolean deleteUser(String uid);
+    UserModel getCurrentUser();
 }

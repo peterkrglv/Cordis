@@ -17,6 +17,7 @@ import com.example.cordis.domain.song.GetAllSongsUseCase;
 import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.domain.song.SongRepository;
 import com.example.cordis.domain.user.UserRepository;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.List;
 
@@ -53,7 +54,10 @@ public class PlaylistsViewModel extends ViewModel {
             new Thread(() -> {
                 SongRepository songRepository = new SongRepositoryImpl();
                 ImageRepository imageRepository = new ImageRepositoryImpl();
-                List<SongModel> songs = GetAllSongsUseCase.execute(songRepository, imageRepository);
+                UserRepository userRepository = new UserRepositoryImpl();
+                List<SongModel> songs = GetAllSongsUseCase.execute(
+                        songRepository, imageRepository, userRepository
+                );
                 this.songs.postValue(songs);
                 songsState.postValue(GetSongsState.SUCCESS);
             }).start();

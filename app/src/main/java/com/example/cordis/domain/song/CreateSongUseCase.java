@@ -3,6 +3,7 @@ package com.example.cordis.domain.song;
 import android.util.Log;
 
 import com.example.cordis.domain.ImageRepository;
+import com.example.cordis.domain.user.UserModel;
 import com.example.cordis.domain.user.UserRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -13,14 +14,13 @@ public class CreateSongUseCase {
             SongRepository songRepository,
             UserRepository userRepository,
             ImageRepository imageRepository) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String songId = db.collection("songs").document().getId();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String username;
-        song.setSongId(songId);
+        UserModel user = userRepository.getCurrentUser();
+        if (user == null) {return false;}
+        String uid = user.getUid();
         song.setOwner(uid);
         SongItem songItem = new SongItem(song);
-        if(songRepository.createSong(songItem)) {
+        String songId = songRepository.createSong(songItem);
+        if(songId != null) {
             if (song.getSongImage() != null) return imageRepository.uploadImage(song.getSongImage(), songId, "songImages");
             else return true;
         } else {

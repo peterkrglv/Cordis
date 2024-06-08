@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cordis.domain.song.SongModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistModel implements Parcelable {
@@ -19,7 +20,7 @@ public class PlaylistModel implements Parcelable {
     private String playlistOwnerName = "";
     private String playlistDescription = "";
     private byte[] playlistImage = new byte[0];
-    private List<SongModel> songs = null;
+    private List<String> songs = new ArrayList<>();
 
     public PlaylistModel() {
         playlistId = "";
@@ -69,7 +70,7 @@ public class PlaylistModel implements Parcelable {
         playlistOwnerName = in.readString();
         playlistDescription = in.readString();
         playlistImage = in.createByteArray();
-        songs = in.createTypedArrayList(SongModel.CREATOR);
+        in.readStringList(songs);
     }
 
 
@@ -105,11 +106,11 @@ public class PlaylistModel implements Parcelable {
         this.playlistImage = playlistImage;
     }
 
-    public List<SongModel> getSongs() {
+    public List<String> getSongs() {
         return songs;
     }
 
-    public void setSongs(List<SongModel> songs) {
+    public void setSongs(List<String> songs) {
         this.songs = songs;
     }
 
@@ -144,6 +145,6 @@ public class PlaylistModel implements Parcelable {
         dest.writeString(this.playlistOwner);
         dest.writeString(this.playlistDescription);
         dest.writeByteArray(this.playlistImage);
-        dest.writeTypedList(this.songs);
+        dest.writeStringList(this.songs);
     }
 }

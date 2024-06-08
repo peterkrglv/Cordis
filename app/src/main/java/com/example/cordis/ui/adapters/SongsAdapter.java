@@ -1,4 +1,4 @@
-package com.example.cordis.ui.songs_in_playlist;
+package com.example.cordis.ui.adapters;
 
 import static com.example.cordis.Methods.byteArrayToBitmap;
 
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cordis.R;
 import com.example.cordis.databinding.ItemSongBinding;
 import com.example.cordis.domain.song.SongModel;
 
@@ -17,10 +18,15 @@ import java.util.List;
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHolder> {
     List<SongModel> songs;
     private onSongClickListener onSongClickListener;
+    private onFavouriteClickListener onFavouriteClickListener;
 
     public interface onSongClickListener {
         void onSongClick(SongModel playlist);
 
+    }
+
+    public interface onFavouriteClickListener {
+        void onFavouriteClick(SongModel song);
     }
 
     public void setSongs(List<SongModel> songs) {
@@ -29,6 +35,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
 
     public void setOnSongClickListener(SongsAdapter.onSongClickListener onSongClickListener) {
         this.onSongClickListener = onSongClickListener;
+    }
+
+    public void setOnFavouriteClickListener(SongsAdapter.onFavouriteClickListener onFavouriteClickListener) {
+        this.onFavouriteClickListener = onFavouriteClickListener;
     }
 
     public SongsAdapter(List<SongModel> songs) {
@@ -64,12 +74,29 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.SongsViewHol
         if (song.getSongImage() != null) {
             binding.songImage.setImageBitmap(byteArrayToBitmap(song.getSongImage()));
         }
+        if (song.getFavourite()) {
+            binding.likeButton.setIconResource(R.drawable.favorite_filled);
+        } else {
+            binding.likeButton.setIconResource(R.drawable.favorite);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onSongClickListener != null) {
                     onSongClickListener.onSongClick(song);
+                }
+            }
+        });
+
+        holder.binding.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                songs.get(position).setFavourite(!songs.get(position).getFavourite());
+                notifyDataSetChanged();
+                //notifyItemChanged(holder.getAdapterPosition());
+                if (onFavouriteClickListener != null) {
+                    onFavouriteClickListener.onFavouriteClick(song);
                 }
             }
         });

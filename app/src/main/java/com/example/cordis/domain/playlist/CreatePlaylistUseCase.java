@@ -18,6 +18,7 @@ public class CreatePlaylistUseCase {
         //Я понимаю, что тут нельзя обращаться к БД
         //Но если в этом месте не задать id
         //То загрузку картинки придется осуществлять после добавления плейлиста в отдельном useCase
+        //метод создания плейлиста возвращает id
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String playlistId = db.collection("playlists").document().getId();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -39,7 +40,12 @@ public class CreatePlaylistUseCase {
         playlist.setPlaylistOwnerName(username);
         PlaylistItem playlistItem = new PlaylistItem(playlist);
         if(playlistRepository.createPlaylist(playlistItem)) {
-            if (playlist.getPlaylistImage() != null) return imageRepository.uploadImage(playlist.getPlaylistImage(), playlistId, "playlistImages");
+            if (playlist.getPlaylistImage() != null) {
+                return imageRepository.uploadImage(
+                        playlist.getPlaylistImage(),
+                        playlistId,
+                        "playlistImages");
+            }
             else return true;
         } else {
             return false;

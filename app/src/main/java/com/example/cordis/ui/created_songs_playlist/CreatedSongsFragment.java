@@ -1,4 +1,4 @@
-package com.example.cordis.ui.songs_in_playlist;
+package com.example.cordis.ui.created_songs_playlist;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -15,20 +15,22 @@ import android.view.ViewGroup;
 
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentCreatedSongsBinding;
-import com.example.cordis.domain.user.UserModel;
+import com.example.cordis.ui.adapters.SongsAdapter;
 
 import java.util.ArrayList;
 
 public class CreatedSongsFragment extends Fragment {
     FragmentCreatedSongsBinding binding;
     CreatedSongsViewModel viewModel;
-    UserModel currentUser;
     SongsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCreatedSongsBinding.inflate(inflater, container, false);
+
+        setUpAdapter();
+
         viewModel = new ViewModelProvider(this).get(CreatedSongsViewModel.class);
         viewModel.createdSongsState.observe(getViewLifecycleOwner(), state -> {
             switch (state) {
@@ -52,11 +54,27 @@ public class CreatedSongsFragment extends Fragment {
             adapter.setSongs(obtainedSongs);
             adapter.notifyDataSetChanged();
         });
-
         viewModel.getCreatedSongs();
+
+        viewModel.favouriteSongState.observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case LOADING:
+                    break;
+                case SUCCESS:
+                    Log.d("CreatedSongsFragment", "Favourite state updated");
+                    break;
+                case ERROR:
+                    Log.e("CreatedSongsFragment", "Error while updating favourite state");
+                    break;
+            }
+        });
+
+        binding.blockingView.setOnClickListener(v -> {});
+        return binding.getRoot();
+    }
+
+    private void setUpAdapter() {
         adapter = new SongsAdapter(new ArrayList<>());
-        binding.songsRecycler.setAdapter(adapter);
-        binding.songsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter.setOnSongClickListener(song -> {
             Bundle bundle = new Bundle();
@@ -64,6 +82,11 @@ public class CreatedSongsFragment extends Fragment {
             findNavController(binding.getRoot()).navigate(R.id.action_createdSongsFragment_to_songChordsFragment, bundle);
         });
 
-    return binding.getRoot();
+        adapter.setOnFavouriteClickListener(song -> {
+            viewModel.setFavouriteState(song);
+        });
+
+        binding.songsRecycler.setAdapter(adapter);
+        binding.songsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

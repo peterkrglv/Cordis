@@ -1,5 +1,7 @@
 package com.example.cordis.data;
 
+import android.util.Log;
+
 import com.example.cordis.domain.song.SongItem;
 import com.example.cordis.domain.song.SongRepository;
 import com.google.android.gms.tasks.Tasks;
@@ -13,15 +15,18 @@ import java.util.concurrent.ExecutionException;
 
 public class SongRepositoryImpl implements SongRepository {
     @Override
-    public Boolean createSong(SongItem song) {
+    public String createSong(SongItem song) {
         try {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String songId = db.collection("songs").document().getId();
+            song.setSongId(songId);
             db.collection("songs").document(song.getSongId()).set(song);
             db.collection("users").document(song.getOwner())
                     .update("createdSongs", FieldValue.arrayUnion(song.getSongId()));
-            return true;
+            return songId;
         } catch (Exception e) {
-            return false;
+            Log.e("SongRepositoryImpl", "createSong: error");
+            return null;
         }
     }
 

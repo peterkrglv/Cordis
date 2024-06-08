@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.chords.SongChordsFragment">
+    tools:context=".ui.song_chords.SongChordsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
@@ -250,5 +250,4 @@
         </LinearLayout>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

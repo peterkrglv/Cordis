@@ -1,4 +1,4 @@
-package com.example.cordis.ui.playlists;
+package com.example.cordis.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

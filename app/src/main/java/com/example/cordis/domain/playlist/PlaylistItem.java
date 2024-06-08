@@ -16,7 +16,7 @@ public class PlaylistItem implements Parcelable {
     private String playlistOwner = "";
     private String playlistOwnerName = "";
     private String playlistDescription = "";
-    private List<SongModel> songs = new ArrayList<>();
+    private List<String> songs = new ArrayList<>();
 
     public PlaylistItem() {
         playlistId = "";
@@ -24,9 +24,10 @@ public class PlaylistItem implements Parcelable {
         playlistOwner = "";
         playlistOwnerName = "";
         playlistDescription = "";
+        songs = new ArrayList<>();
     }
 
-    public PlaylistItem(String playlistId, String playlistName, String playlistOwner, String playlistOwnerName, String playlistDescription, List<SongModel> songs) {
+    public PlaylistItem(String playlistId, String playlistName, String playlistOwner, String playlistOwnerName, String playlistDescription, List<String> songs) {
         this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.playlistOwner = playlistOwner;
@@ -50,7 +51,7 @@ public class PlaylistItem implements Parcelable {
         playlistOwner = in.readString();
         playlistOwnerName = in.readString();
         playlistDescription = in.readString();
-        songs = in.createTypedArrayList(SongModel.CREATOR);
+        in.readStringList(songs);
     }
 
     public static final Creator<PlaylistItem> CREATOR = new Creator<PlaylistItem>() {
@@ -85,7 +86,7 @@ public class PlaylistItem implements Parcelable {
         return playlistDescription;
     }
 
-    public List<SongModel> getSongs() {
+    public List<String> getSongs() {
         return songs;
     }
 
@@ -101,6 +102,6 @@ public class PlaylistItem implements Parcelable {
         dest.writeString(this.playlistOwner);
         dest.writeString(this.playlistOwnerName);
         dest.writeString(this.playlistDescription);
-        dest.writeTypedList(this.songs);
+        dest.writeStringList(this.songs);
     }
 }

@@ -22,15 +22,18 @@
             android:id="@+id/action_playlistsFragment_to_createdSongsFragment"
             app:destination="@id/createdSongsFragment" />
         <action
-            android:id="@+id/action_playlistsFragment_to_favouritesFragment"
-            app:destination="@id/favouritesFragment" />
-        <action
             android:id="@+id/action_playlistsFragment_to_createPlaylistFragment"
             app:destination="@id/createPlaylistFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_favouriteSongsFragment"
+            app:destination="@id/favouriteSongsFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_self"
+            app:destination="@id/playlistsFragment" />
     </fragment>
     <fragment
         android:id="@+id/songChordsFragment"
-        android:name="com.example.cordis.ui.chords.SongChordsFragment"
+        android:name="com.example.cordis.ui.song_chords.SongChordsFragment"
         android:label="fragment_song_chords"
         tools:layout="@layout/fragment_song_chords" >
         <action
@@ -39,6 +42,9 @@
         <action
             android:id="@+id/action_songChordsFragment_to_playlistsFragment"
             app:destination="@id/playlistsFragment" />
+        <action
+            android:id="@+id/action_songChordsFragment_to_favouriteSongsFragment"
+            app:destination="@id/favouriteSongsFragment" />
     </fragment>
     <fragment
         android:id="@+id/songsInPlaylistFragment"
@@ -87,7 +93,7 @@
     </fragment>
     <fragment
         android:id="@+id/createdSongsFragment"
-        android:name="com.example.cordis.ui.songs_in_playlist.CreatedSongsFragment"
+        android:name="com.example.cordis.ui.created_songs_playlist.CreatedSongsFragment"
         android:label="fragment_created_songs"
         tools:layout="@layout/fragment_created_songs" >
         <action
@@ -96,15 +102,6 @@
         <action
             android:id="@+id/action_createdSongsFragment_to_songChordsFragment"
             app:destination="@id/songChordsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/favouritesFragment"
-        android:name="com.example.cordis.ui.favourites.favouritesFragment"
-        android:label="fragment_favourites"
-        tools:layout="@layout/fragment_favourites" >
-        <action
-            android:id="@+id/action_favouritesFragment_to_playlistsFragment"
-            app:destination="@id/playlistsFragment" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"
@@ -132,5 +129,17 @@
         <action
             android:id="@+id/action_createPlaylistFragment_to_playlistsFragment"
             app:destination="@id/playlistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteSongsFragment"
+        android:name="com.example.cordis.ui.favourite_songs_playlist.FavouriteSongsFragment"
+        android:label="fragment_favourite_songs"
+        tools:layout="@layout/fragment_favourite_songs" >
+        <action
+            android:id="@+id/action_favouriteSongsFragment_to_playlistsFragment"
+            app:destination="@id/playlistsFragment" />
+        <action
+            android:id="@+id/action_favouriteSongsFragment_to_songChordsFragment"
+            app:destination="@id/songChordsFragment" />
     </fragment>
 </navigation>

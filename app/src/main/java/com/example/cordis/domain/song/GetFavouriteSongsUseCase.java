@@ -7,19 +7,19 @@ import com.example.cordis.domain.user.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetCreatedSongsUseCase {
+public class GetFavouriteSongsUseCase {
     public static List<SongModel> execute(
             UserRepository userRepo,
             SongRepository songsRepo,
-            ImageRepository imageRepository
-    ) {
+            ImageRepository imageRepository) {
         UserModel user = userRepo.getCurrentUser();
-        List<String> songsIds = user.getCreatedSongs();
+        List<String> songsIds = user.getFavouriteSongs();
         List<SongModel> songModels = new ArrayList<>();
         for (String song: songsIds) {
             SongModel songModel = GetSongUseCase.execute(song, songsRepo, imageRepository);
+            songModel.setFavourite(true);
             songModels.add(songModel);
         }
-        return SetFavouritesUseCase.execute(userRepo, songModels);
+        return songModels;
     }
 }

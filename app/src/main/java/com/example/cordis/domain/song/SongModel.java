@@ -15,6 +15,7 @@ public class SongModel implements Parcelable {
     private String chords = "";
     private byte[] songImage = new byte[0];
     private String owner = "";
+    private Boolean isFavourite = false;
 
     public SongModel() {
     }
@@ -127,6 +128,10 @@ public class SongModel implements Parcelable {
         this.songId = songId;
     }
 
+    public Boolean getFavourite() {return isFavourite;}
+
+    public void setFavourite(Boolean favorite) {
+        isFavourite = favorite;}
     @Override
     public int describeContents() {
         return 0;
