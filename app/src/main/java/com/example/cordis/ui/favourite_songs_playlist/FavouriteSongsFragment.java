@@ -86,6 +86,8 @@ public class FavouriteSongsFragment extends Fragment {
 
         adapter.setOnFavouriteClickListener(song -> viewModel.setFavouriteState(song));
 
+        adapter.setOnFavouriteClickListener(song -> viewModel.setFavouriteState(song));
+
         binding.songsRecycler.setAdapter(adapter);
         binding.songsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }

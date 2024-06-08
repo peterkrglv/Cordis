@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.ui.adapters.SongsAdapter;
 
 import java.util.ArrayList;
-
 
 public class SongsInPlaylistFragment extends Fragment {
     FragmentSongsInPlaylistBinding binding;
@@ -74,6 +74,8 @@ public class SongsInPlaylistFragment extends Fragment {
             binding.playlistDescription.setText(playlist.getPlaylistDescription());
             if (playlist.getPlaylistImage() != null) {
                 binding.playlistImage.setImageBitmap(Methods.byteArrayToBitmap(playlist.getPlaylistImage()));
+            } else {
+                binding.playlistImage.setImageResource(R.drawable.dvd_disk);
             }
             setUpSongsRecycler();
         }
@@ -90,6 +92,10 @@ public class SongsInPlaylistFragment extends Fragment {
                 bundle.putParcelable("song", song);
                 findNavController(binding.getRoot()).navigate(R.id.action_songsInPlaylistFragment_to_songChordsFragment, bundle);
             }
+        });
+
+        adapter.setOnFavouriteClickListener(song -> {
+            viewModel.setFavouriteState(song);
         });
     }
 }

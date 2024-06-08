@@ -15,8 +15,8 @@
     <string name="songs_you_ve_created">Песни, которые добавили вы</string>
     <string name="song_name">Название песни</string>
     <string name="artist_name">Исполнитель</string>
-    <string name="tuning">Строй</string>
-    <string name="capo">Каподастр</string>
+    <string name="tuning">Строй:</string>
+    <string name="capo">Капо:</string>
     <string name="chords">Аккорды</string>
     <string name="add">Создать</string>
     <string name="cancel">Отменить</string>
@@ -38,4 +38,8 @@
     <string name="create_song">Создайте новую песню</string>
     <string name="create_chords">Создайте новые аккорды</string>
     <string name="stop">Стоп</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
+    <string name="capo_example">2ой лад</string>
+    <string name="log_out">Выход</string>
+    <string name="log_out_confirmation">Вы уверены, что хотите выйти?</string>
 </resources>

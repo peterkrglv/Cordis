@@ -16,8 +16,8 @@
     <string name="songs_you_ve_created">Songs you\'ve created</string>
     <string name="song_name">Song Name</string>
     <string name="artist_name">Artist Name</string>
-    <string name="tuning">Tuning</string>
-    <string name="capo">Capo</string>
+    <string name="tuning">Tuning:</string>
+    <string name="capo">Capo:</string>
     <string name="chords">Chords</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
@@ -40,4 +40,8 @@
     <string name="create_chords">Create new chords</string>
     <string name="stop">Stop</string>
     <string name="add_to_playlist">Add to playlist</string>
+    <string name="tuning_example" translatable="false">EADGBE</string>
+    <string name="capo_example">2nd fret</string>
+    <string name="log_out">Log out</string>
+    <string name="log_out_confirmation">Are you sure you want to log out?</string>
 </resources>

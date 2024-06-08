@@ -2,10 +2,13 @@ package com.example.cordis.ui.playlists;
 
 import static androidx.navigation.Navigation.findNavController;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.SearchView;
 import com.example.cordis.R;
 import com.example.cordis.databinding.FragmentPlaylistsBinding;
 import com.example.cordis.domain.playlist.PlaylistModel;
+import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.ui.adapters.PlaylistsAdapter;
 import com.example.cordis.ui.adapters.SongsAdapter;
 
@@ -28,6 +32,7 @@ public class PlaylistsFragment extends Fragment {
     PlaylistsAdapter adapter;
 
     SongsAdapter searchAdapter;
+    NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,8 @@ public class PlaylistsFragment extends Fragment {
             }
         });
 
-        binding.blockingView.setOnClickListener(v -> {});
+        binding.blockingView.setOnClickListener(v -> {
+        });
 
         viewModel.createdPlaylists.observe(getViewLifecycleOwner(), obtainedPlaylists -> {
             Log.d("PlaylistsFragment", "Obtained playlists: " + obtainedPlaylists.size());
@@ -80,22 +86,59 @@ public class PlaylistsFragment extends Fragment {
         setUpCards();
         setUpAddButton();
         setUpSearch();
+        setUpSearchAdapter();
+        setUpLogoutButton();
 
         return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = findNavController(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.searchView.setQuery("", false);
+        binding.searchView.clearFocus();
+        binding.searchView.setIconified(true);
+    }
+
+    private void setUpLogoutButton() {
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.log_out)
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.logout();
+                                navController.navigate(R.id.action_playlistsFragment_to_logInFragment);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+    }
+
 
     private void setUpCards() {
         binding.favouritesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(binding.getRoot()).navigate(R.id.action_playlistsFragment_to_favouriteSongsFragment);
+                navController.navigate(R.id.action_playlistsFragment_to_favouriteSongsFragment);
             }
         });
 
         binding.createdSongsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_createdSongsFragment);
+                navController.navigate(com.example.cordis.R.id.action_playlistsFragment_to_createdSongsFragment);
             }
         });
     }
@@ -109,17 +152,15 @@ public class PlaylistsFragment extends Fragment {
             public void onPlaylistClick(PlaylistModel playlist) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("playlist", playlist);
-                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_songsInPlaylistFragment, bundle);
+                navController.navigate(com.example.cordis.R.id.action_playlistsFragment_to_songsInPlaylistFragment, bundle);
             }
         });
     }
 
     private void setUpSearch() {
-        searchAdapter = new SongsAdapter(new ArrayList<>());
-        binding.searchRecyclerView.setAdapter(searchAdapter);
-        binding.searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.searchView.setOnSearchClickListener(new View.OnClickListener() {
+            ;
 
-        binding.searchBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 binding.playlistsRecyclerView.setVisibility(View.GONE);
@@ -129,6 +170,7 @@ public class PlaylistsFragment extends Fragment {
                 binding.addButton.setVisibility(View.GONE);
                 binding.addPlaylist.setVisibility(View.GONE);
                 binding.addSong.setVisibility(View.GONE);
+                binding.logoutButton.setVisibility(View.GONE);
             }
         });
 
@@ -140,8 +182,43 @@ public class PlaylistsFragment extends Fragment {
                 binding.favouritesCard.setVisibility(View.VISIBLE);
                 binding.createdSongsCard.setVisibility(View.VISIBLE);
                 binding.addButton.setVisibility(View.VISIBLE);
+                binding.logoutButton.setVisibility(View.VISIBLE);
                 return false;
             }
+        });
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+    }
+
+    private void setUpSearchAdapter() {
+        searchAdapter = new SongsAdapter(new ArrayList<>());
+        binding.searchRecyclerView.setAdapter(searchAdapter);
+        binding.searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchAdapter.setOnSongClickListener(new SongsAdapter.onSongClickListener() {
+            @Override
+            public void onSongClick(SongModel song) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("song", song);
+                findNavController(binding.getRoot()).navigate(R.id.action_playlistsFragment_to_songChordsFragment, bundle);
+            }
+        });
+
+        searchAdapter.setOnFavouriteClickListener(song -> {
+            viewModel.setFavouriteState(song);
         });
     }
 
@@ -164,14 +241,14 @@ public class PlaylistsFragment extends Fragment {
         binding.addSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_editSongFragment);
+                navController.navigate(com.example.cordis.R.id.action_playlistsFragment_to_editSongFragment);
             }
         });
 
         binding.addPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findNavController(binding.getRoot()).navigate(com.example.cordis.R.id.action_playlistsFragment_to_createPlaylistFragment);
+                navController.navigate(com.example.cordis.R.id.action_playlistsFragment_to_createPlaylistFragment);
             }
         });
     }

@@ -14,14 +14,14 @@ public class BottomSheetChords extends BottomSheetDialogFragment {
 
     BottomSheetChordsBinding binding;
 
-    public interface BottomSheetListener {
-        void onButtonClicked();
+    public interface AddSongListener {
+        void onAddClicked();
     }
 
-    private BottomSheetListener mListener;
+    private AddSongListener addListener;
 
-    public void setBottomSheetListener(BottomSheetListener listener) {
-        mListener = listener;
+    public void setBottomSheetListener(AddSongListener listener) {
+        addListener = listener;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BottomSheetChords extends BottomSheetDialogFragment {
         binding.addToPlaylistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onButtonClicked();
+                addListener.onAddClicked();
                 dismiss();
             }
         });

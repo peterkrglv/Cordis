@@ -30,6 +30,12 @@
         <action
             android:id="@+id/action_playlistsFragment_self"
             app:destination="@id/playlistsFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_playlistsFragment_to_songChordsFragment2"
+            app:destination="@id/songChordsFragment" />
     </fragment>
     <fragment
         android:id="@+id/songChordsFragment"

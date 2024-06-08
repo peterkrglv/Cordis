@@ -13,10 +13,13 @@ import com.example.cordis.domain.ImageRepository;
 import com.example.cordis.domain.playlist.GetCreatedPlaylistsUseCase;
 import com.example.cordis.domain.playlist.PlaylistModel;
 import com.example.cordis.domain.playlist.PlaylistRepository;
+import com.example.cordis.domain.song.FavouriteSongUseCase;
 import com.example.cordis.domain.song.GetAllSongsUseCase;
 import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.domain.song.SongRepository;
+import com.example.cordis.domain.user.LogOutUseCase;
 import com.example.cordis.domain.user.UserRepository;
+import com.example.cordis.ui.song_chords.FavouriteSongState;
 import com.google.firebase.firestore.auth.User;
 
 import java.util.List;
@@ -64,6 +67,28 @@ public class PlaylistsViewModel extends ViewModel {
         } catch (Exception e) {
             songsState.postValue(GetSongsState.ERROR);
             Log.e("PlaylistsViewModel", "Error getting songs", e);
+        }
+    }
+
+    public void setFavouriteState(SongModel song) {
+        try {
+            new Thread(() -> {
+                UserRepository userRepository = new UserRepositoryImpl();
+                FavouriteSongUseCase.execute(userRepository, song);
+            }).start();
+        } catch (Exception e) {
+            Log.e("PlaylistsViewModel", "Error setting favourite state", e);
+        }
+    }
+
+    public void logout() {
+        try {
+            new Thread(() -> {
+                UserRepository userRepository = new UserRepositoryImpl();
+                LogOutUseCase.execute(userRepository);
+            }).start();
+        } catch (Exception e) {
+            Log.e("PlaylistsViewModel", "Error logging out", e);
         }
     }
 }

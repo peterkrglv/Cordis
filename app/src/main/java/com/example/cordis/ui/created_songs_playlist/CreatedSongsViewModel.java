@@ -15,6 +15,7 @@ import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.domain.song.SongRepository;
 import com.example.cordis.domain.user.UserModel;
 import com.example.cordis.domain.user.UserRepository;
+import com.example.cordis.ui.song_chords.FavouriteSongState;
 
 import java.util.List;
 
@@ -69,8 +70,3 @@ enum GetCreatedSongsState {
     ERROR
 }
 
-enum FavouriteSongState {
-    LOADING,
-    SUCCESS,
-    ERROR
-}

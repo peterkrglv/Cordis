@@ -8,4 +8,5 @@ public interface UserRepository {
     UserModel getUser(String uid);
     Boolean deleteUser(String uid);
     UserModel getCurrentUser();
+    Boolean logOut();
 }

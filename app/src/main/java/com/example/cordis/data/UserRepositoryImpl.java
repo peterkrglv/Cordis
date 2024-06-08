@@ -57,6 +57,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Boolean logOut() {
+        try {
+            FirebaseAuth.getInstance().signOut();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
     public UserModel getUser(String uid) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentSnapshot doc = null;

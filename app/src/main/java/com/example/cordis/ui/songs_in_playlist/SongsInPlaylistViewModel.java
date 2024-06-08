@@ -1,5 +1,7 @@
 package com.example.cordis.ui.songs_in_playlist;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -8,6 +10,7 @@ import com.example.cordis.data.SongRepositoryImpl;
 import com.example.cordis.data.UserRepositoryImpl;
 import com.example.cordis.domain.ImageRepository;
 import com.example.cordis.domain.playlist.PlaylistModel;
+import com.example.cordis.domain.song.FavouriteSongUseCase;
 import com.example.cordis.domain.song.GetSongsFromPlaylistUseCase;
 import com.example.cordis.domain.song.SongModel;
 import com.example.cordis.domain.song.SongRepository;
@@ -34,6 +37,17 @@ public class SongsInPlaylistViewModel extends ViewModel {
             }).start();
         } catch (Exception e) {
             getSongsState.postValue(SongsState.ERROR);
+        }
+    }
+
+    public void setFavouriteState(SongModel song) {
+        try {
+            new Thread(() -> {
+                UserRepository userRepository = new UserRepositoryImpl();
+                FavouriteSongUseCase.execute(userRepository, song);
+            }).start();
+        } catch (Exception e) {
+            Log.e("PlaylistsViewModel", "Error setting favourite state", e);
         }
     }
 }

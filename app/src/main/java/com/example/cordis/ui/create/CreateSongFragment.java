@@ -64,7 +64,7 @@ public class CreateSongFragment extends Fragment {
             findNavController(v).navigate(R.id.action_editSongFragment_to_playlistsFragment);
         });
 
-
+        binding.tuning.setText(R.string.tuning_example);
 
         return binding.getRoot();
     }

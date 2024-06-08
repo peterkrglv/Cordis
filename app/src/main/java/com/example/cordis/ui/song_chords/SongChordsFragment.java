@@ -1,5 +1,6 @@
 package com.example.cordis.ui.song_chords;
 
+import static androidx.navigation.Navigation.findNavController;
 import static com.example.cordis.Methods.byteArrayToBitmap;
 
 import android.animation.Animator;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ public class SongChordsFragment extends Fragment {
 
     FragmentSongChordsBinding binding;
     SongChordsViewModel viewModel;
+    NavController navController;
     ObjectAnimator scroller;
     Integer fontSize = 16;
     Integer scrollSpeed = 35;
@@ -35,12 +38,13 @@ public class SongChordsFragment extends Fragment {
         binding = FragmentSongChordsBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(SongChordsViewModel.class);
         Bundle bundle = getArguments();
+
         if (bundle != null) {
             song = bundle.getParcelable("song");
             binding.songName.setText(song.getSongName());
             binding.songArtist.setText(song.getSongArtist());
-            binding.tuning.setText(song.getTuning());
-            binding.capo.setText(song.getCapo());
+            binding.tuningText.setText(song.getTuning());
+            binding.capoText.setText(song.getCapo());
             binding.chords.setText(song.getChords());
             binding.songImage.setImageBitmap(byteArrayToBitmap(song.getSongImage()));
         }
@@ -50,6 +54,12 @@ public class SongChordsFragment extends Fragment {
         setUpScrolling();
         setUpMoreOptions();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = findNavController(view);
     }
 
     private void setUpMoreOptions() {
